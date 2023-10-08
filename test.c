@@ -20,11 +20,36 @@ int a = {44};
 printf("%d", a);
 */
 
-int main()
-{
-    printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200));
-    printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200)^((uint32_t)0x01000000));
-    printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200)^((uint32_t)0x02000000));
+// int main()
+// {
+//     printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200));
+//     printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200)^((uint32_t)0x01000000));
+//     printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200)^((uint32_t)0x02000000));
+    
+// }
+
+#include <stdio.h>
+
+#define ROWS 2
+#define COLS 3
+
+int main() {
+    int array[ROWS][COLS] = {
+        {1, 2, 3},
+        {4, 5, 6}
+    };
+
+    // Define a pointer to a 2D array
+    int (*ptr)[COLS];
+
+    // Assign the address of the array to the pointer
+    ptr = array;
+
+    // Accessing elements using the pointer
+    printf("%d\n", ptr[0][2]);  // Output: 3
+    printf("%d\n", ptr[1][1]);  // Output: 5
+
+    return 0;
 }
 
 // ===============================================================

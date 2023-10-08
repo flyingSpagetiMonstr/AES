@@ -10,8 +10,7 @@
 
 #include "key_schedule.c"
 #include "S-Box.c"
-#include "new_mix.c"
-// #include "mix_column.c"
+#include "../mix_column.c"
 
 #include <stdio.h>
 
