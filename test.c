@@ -25,7 +25,6 @@ printf("%d", a);
 //     printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200));
 //     printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200)^((uint32_t)0x01000000));
 //     printf("%08X\n", ((uint32_t)0x00012001)^((uint32_t)0x59962200)^((uint32_t)0x02000000));
-    
 // }   
 #include <stdio.h>
 
