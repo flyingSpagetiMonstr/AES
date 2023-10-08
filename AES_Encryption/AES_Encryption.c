@@ -108,7 +108,7 @@ void AES_Encrytion(uint8_t block[4][4], uint32_t *key_words, int method)
         print_b(block);
 #endif
 
-        MixColumns(block);
+        MixColumns(block, 0);
         AddRoundKey(block, W);
         W += 4;
     }

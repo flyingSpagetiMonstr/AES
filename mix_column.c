@@ -3,21 +3,21 @@
 #include <stdint.h>
 #include <string.h>
 
-uint8_t cons_matrix[4][4] = {
+// int invert = CONS_MATRIX or CONS_MATRIX_INV
+#define CONS_MATRIX 0
+#define CONS_MATRIX_INV 1
+
+uint8_t matrices[2][4][4] = {{
     {2, 3, 1, 1},
     {1, 2, 3, 1},
     {1, 1, 2, 3},
-    {3, 1, 1, 2}
-};
-
-uint8_t cons_matrix_inv[4][4] = {
+    {3, 1, 1, 2}},{
     {0x0E, 0x0B, 0x0D, 0x09},
     {0x09, 0x0E, 0x0B, 0x0D},
     {0x0D, 0x09, 0x0E, 0x0B},
-    {0x0B, 0x0D, 0x09, 0x0E}
+    {0x0B, 0x0D, 0x09, 0x0E}}
 };
 
-uint8_t ***matrices = {cons_matrix, cons_matrix_inv};
 
 uint8_t modifier = 0x1B;
 
@@ -42,7 +42,7 @@ int main()
 // ===============================================
 
 // void matrix_mul(uint8_t block[4][4])
-void MixColumns(uint8_t block[4][4])
+void MixColumns(uint8_t block[4][4], int invert)
 {
     uint8_t new_block[4][4] = {0};
 
@@ -52,7 +52,7 @@ void MixColumns(uint8_t block[4][4])
         {
             for (int cnt = 0; cnt < 4; cnt++)
             {
-                new_block[i][j] ^= mul(block[cnt][j], matrices[0][i][cnt]);
+                new_block[i][j] ^= mul(block[cnt][j], matrices[invert][i][cnt]);
             }
         }
     }

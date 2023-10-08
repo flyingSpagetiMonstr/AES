@@ -81,3 +81,14 @@ void example(void)
 
     AES_Encrytion(block, key_words, 0);
 }
+
+// Original block:
+// 00 01 DA 86
+// 01 A1 78 15
+// 00 98 17 35
+// 01 AF 34 66
+// Result:
+// 6C 8F D2 1A
+// DD 56 3B 65
+// 59 42 47 42
+// 6B CB 98 2A
