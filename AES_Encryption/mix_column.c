@@ -13,16 +13,16 @@ elem_t cons_matrix[4][4] = {
 
 elem_t modifier = 0x1B;
 
-elem_t mul1(elem_t x);
-elem_t mul2(elem_t x);
-elem_t mul3(elem_t x);
+#define MUL2(x) (((x) & 0B10000000)?(((x)<<1)^modifier): ((x)<<1))
+#define GET_BIT(x, offset) (((uint8_t)((x) << (7 - (offset)))) >> 7)
 
-elem_t (*muls[])(elem_t) = {NULL, mul1, mul2, mul3};
+uint8_t mul2e(uint8_t x, int exp);
+uint8_t mul(uint8_t x, uint8_t e);
 
 
 #if MIX_COL_TEST
 #include <stdio.h>
-elem_t **matrix_mul(elem_t block[4][4]);
+elem_t **MixColumns(elem_t block[4][4]);
 int main()
 {
     elem_t x = 0B10101010;
@@ -44,7 +44,7 @@ void MixColumns(elem_t block[4][4])
         {
             for (int cnt = 0; cnt < 4; cnt++)
             {
-                new_block[i][j] ^= muls[cons_matrix[i][cnt]](block[cnt][j]);
+                new_block[i][j] ^= mul(block[cnt][j], cons_matrix[i][cnt]);
             }
         }
     }
@@ -52,35 +52,21 @@ void MixColumns(elem_t block[4][4])
 }
 
 
-elem_t mul1(elem_t x)
+uint8_t mul2e(uint8_t x, int exp)
 {
+    for (int i = 0; i < exp; i++)
+    {
+        x = MUL2(x);
+    }
     return x;
 }
-elem_t mul2(elem_t x)
-{
-    return (x & 0B10000000)?((x<<1)^modifier): (x<<1);
-}
-elem_t mul3(elem_t x)
-{
-    return x^mul2(x);
-}
 
-
-// elem_t mul(elem_t x, elem_t a)
-// {
-//     switch (a)
-//     {
-//     case 1:
-//         return x;
-//         break;
-//     case 2:
-//         return (x & 0B10000000)?((x<<1)^modifier): (x<<1);
-//         break;
-//     case 3:
-//         return 
-//         break;
-//     default:
-//         break;
-//     }
-    
-// } 
+uint8_t mul(uint8_t x, uint8_t e)
+{
+    uint8_t r = 0;
+    for (int i = 0; i < 8; i++)
+    {
+        r ^= GET_BIT(e, i) * mul2e(x, i)  ;
+    }
+    return r;
+}
