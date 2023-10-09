@@ -72,7 +72,8 @@ uint8_t mul2e(uint8_t x, int exp)
 uint8_t mul(uint8_t x, uint8_t e)
 {
     uint8_t r = 0;
-    for (int i = 0; i < 8; i++)
+    // for (int i = 0; i < 8; i++)
+    for (int i = 0; i < 4; i++)
     {
         r ^= GET_BIT(e, i) * mul2e(x, i)  ;
     }
