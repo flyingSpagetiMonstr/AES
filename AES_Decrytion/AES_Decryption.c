@@ -55,7 +55,7 @@ void AddRoundKey(uint8_t block[4][4], uint32_t W[4])
     }
 }
 
-
+// inv_subbytes
 void SubBytes(uint8_t block[4][4], uint8_t sbox[256])
 {
     for (int i = 0; i < 4; i++)
@@ -74,8 +74,8 @@ void InvShiftRows(uint8_t block[4][4])
     {
         for (int j = 0; j < 4; j++)
         {
-            tmp[j] = block[i][(j + i)%4];
-            // tmp[j] = block[i][(j - i)%4];
+            // tmp[j] = block[i][(j + i)%4];
+            tmp[j] = block[i][(j - i)%4];
         }
         for (int j = 0; j < 4; j++)
         {

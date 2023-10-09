@@ -3,7 +3,7 @@
 #include <stdint.h>
 #include <string.h>
 
-// int invert = CONS_MATRIX or CONS_MATRIX_INV
+// int inverse = CONS_MATRIX or CONS_MATRIX_INV
 #define CONS_MATRIX 0
 #define CONS_MATRIX_INV 1
 
@@ -42,7 +42,7 @@ int main()
 // ===============================================
 
 // void matrix_mul(uint8_t block[4][4])
-void MixColumns(uint8_t block[4][4], int invert)
+void MixColumns(uint8_t block[4][4], int inverse)
 {
     uint8_t new_block[4][4] = {0};
 
@@ -52,7 +52,7 @@ void MixColumns(uint8_t block[4][4], int invert)
         {
             for (int cnt = 0; cnt < 4; cnt++)
             {
-                new_block[i][j] ^= mul(block[cnt][j], matrices[invert][i][cnt]);
+                new_block[i][j] ^= mul(block[cnt][j], matrices[inverse][i][cnt]);
             }
         }
     }

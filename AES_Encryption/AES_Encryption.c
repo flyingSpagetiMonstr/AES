@@ -8,8 +8,8 @@
 
 #include <stdint.h>
 
-#include "key_schedule.c"
-#include "S-Box.c"
+#include "../key_schedule.c"
+#include "../S-Box.c"
 #include "../mix_column.c"
 
 #include <stdio.h>
@@ -17,7 +17,7 @@
 // #define ROUND_N (9, 11 or 13)
 // block size of 128 bits, and a key size of 128, 192, or 256 bits
 
-void ShiftRows(uint8_t block[4][4]);
+void ShiftRows(uint8_t block[4][4], int inverse);
 void SubBytes(uint8_t block[4][4], uint8_t sbox[256]);
 void AddRoundKey(uint8_t block[4][4], uint32_t W[4]);
 
@@ -42,6 +42,8 @@ int main()
 
 void AES_Encrytion(uint8_t block[4][4], uint32_t *key_words, int method)
 {
+    int inverse = 0;
+
     int KEY_SIZES[3] = {128, 192, 256}; // 32*4 32*6 | 32*8;
     int ROUND_N_S[3] = {10, 12, 14};
 
@@ -101,20 +103,20 @@ void AES_Encrytion(uint8_t block[4][4], uint32_t *key_words, int method)
         print_b(block);
 #endif
 
-        ShiftRows(block);
+        ShiftRows(block, inverse);
         
 #if AES_R_TEST
         puts("After Shift:");
         print_b(block);
 #endif
 
-        MixColumns(block, 0);
+        MixColumns(block, inverse);
         AddRoundKey(block, W);
         W += 4;
     }
     // Final Round
     SubBytes(block, sbox);
-    ShiftRows(block);
+    ShiftRows(block, inverse);
     AddRoundKey(block, W);
     W += 4;
 
@@ -136,25 +138,27 @@ void AddRoundKey(uint8_t block[4][4], uint32_t W[4])
     }
 }
 
-void SubBytes(uint8_t block[4][4], uint8_t sbox[256])
+void SubBytes(uint8_t block[4][4], uint8_t sbox_or_inverse[256])
 {
     for (int i = 0; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            block[i][j] = sbox[block[i][j]];
+            block[i][j] = sbox_or_inverse[block[i][j]];
         }
     }
 }
 
-void ShiftRows(uint8_t block[4][4])
+void ShiftRows(uint8_t block[4][4], int inverse)
 {
     uint8_t tmp[4];
+    // if inverse = 0, sign = 1 else = -1
+    int sign[2] = {1, -1};
     for (int i = 1; i < 4; i++)
     {
         for (int j = 0; j < 4; j++)
         {
-            tmp[j] = block[i][(j + i)%4];
+            tmp[j] = block[i][(j + sign[inverse] * i)%4];
         }
         for (int j = 0; j < 4; j++)
         {
