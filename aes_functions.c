@@ -1,5 +1,11 @@
-#include <stdint.h>
+#ifndef INCLUDE_AES_FUNCTIONS
+#define INCLUDE_AES_FUNCTIONS
 
+#include <stdint.h>
+#include <stdio.h>
+
+// get byte from 32bit x with offset from the highest digit (index start with 0)
+#define GET_BYTE(x, offset) ((x) << (8*(offset))) >> 8*3
 
 void AddRoundKey(uint8_t block[4][4], uint32_t W[4])
 {
@@ -7,7 +13,7 @@ void AddRoundKey(uint8_t block[4][4], uint32_t W[4])
     {
         for (int j = 0; j < 4; j++)
         {
-            block[j][i] ^= (W[i] << (8*j)) >> 8*3;
+            block[j][i] ^= GET_BYTE(W[i], j);
         }
     }
 }
@@ -52,3 +58,5 @@ void print_b(uint8_t block[4][4])
         puts("");
     }
 }
+
+#endif // INCLUDE_AES_FUNCTIONS

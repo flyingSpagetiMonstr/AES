@@ -1,11 +1,19 @@
+#ifndef INCLUDE_MIX_COLUMN
+#define INCLUDE_MIX_COLUMN
+
+
 #define MIX_COL_TEST 0
 
 #include <stdint.h>
 #include <string.h>
 
+#include "../aes_functions.c" // import GET_BYTE
+
 // int inverse = CONS_MATRIX or CONS_MATRIX_INV
 #define CONS_MATRIX 0
 #define CONS_MATRIX_INV 1
+
+
 
 uint8_t matrices[2][4][4] = {{
     {2, 3, 1, 1},
@@ -24,13 +32,15 @@ uint8_t modifier = 0x1B;
 #define MUL2(x) (((x) & 0B10000000)?(((x)<<1)^modifier): ((x)<<1))
 #define GET_BIT(x, offset) (((uint8_t)((x) << (7 - (offset)))) >> 7)
 
+
+
 uint8_t mul2e(uint8_t x, int exp);
 uint8_t mul(uint8_t x, uint8_t e);
 
 
 #if MIX_COL_TEST
 #include <stdio.h>
-uint8_t **MixColumns(uint8_t block[4][4]);
+// uint8_t **MixColumns(uint8_t block[4][4]);
 int main()
 {
     uint8_t x = 0B10101010;
@@ -60,6 +70,27 @@ void MixColumns(uint8_t block[4][4], int inverse)
 }
 
 
+uint32_t MixColumns_Word_inv(uint32_t W)
+{
+    uint8_t new_W_split[4] = {0};
+    
+    for (int index_new = 0; index_new < 4; index_new++)
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            new_W_split[index_new] ^= mul(GET_BYTE(W, i), matrices[1][index_new][i]);
+        }
+    }
+
+    W = 0;
+    for (int index_new = 0; index_new < 4; index_new++)
+    {
+        W += ((uint32_t)new_W_split[index_new]) << ((3-index_new)*8);
+    }
+
+    return W;
+}
+
 uint8_t mul2e(uint8_t x, int exp)
 {
     for (int i = 0; i < exp; i++)
@@ -79,3 +110,5 @@ uint8_t mul(uint8_t x, uint8_t e)
     }
     return r;
 }
+
+#endif // INCLUDE_MIX_COLUMN

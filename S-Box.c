@@ -1,3 +1,6 @@
+#ifndef INCLUDE_S_BOX
+#define INCLUDE_S_BOX
+
 #define S_BOX_MAIN 0
 // S-box(8-bit -> 8bit)
 // 2^8 = 256
@@ -57,9 +60,15 @@ void initialize_inverse_sbox(uint8_t sbox[256], uint8_t inverse_sbox[256])
 {
 	// sbox[x] = y; inverse_sbox[y] = x;
 	uint8_t y = 0;
-	for (uint8_t x = 0; x < 256; x++)
+
+	// (uint8_t)255 + 1 = 0
+	for (uint8_t x = 0; ; x++)
 	{
 		y = sbox[x];
 		inverse_sbox[y] = x;
+
+		if (x == 255) break;
 	}
 }
+
+#endif // INCLUDE_S_BOX

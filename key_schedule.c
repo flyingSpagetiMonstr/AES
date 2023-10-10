@@ -1,3 +1,7 @@
+#ifndef INCLUDE_KEY_SCHEDULE
+#define INCLUDE_KEY_SCHEDULE
+
+
 #define KEY_SCHEDULE_TEST 0
 
 #include <stdlib.h> 
@@ -7,6 +11,7 @@
 #define RotWord(x) ((x) << 8 | (x) >> (32 - 8))
 
 uint32_t SubWord(uint32_t x, uint8_t sbox[256]);
+
 
 uint32_t rcon[11] = {
     0xffffffff,
@@ -84,7 +89,7 @@ uint32_t *key_schedule(
     return W;
 }
 
-uint32_t SubWord(uint32_t x, uint8_t sbox[256])
+uint32_t SubWord(uint32_t x, uint8_t sbox[256]) // sbox or inverse_sbox
 {
     uint8_t x_s[4];
     uint32_t output = 0;
@@ -100,4 +105,17 @@ uint32_t SubWord(uint32_t x, uint8_t sbox[256])
     return output;
 }
 
+// void new_round_keys(uint32_t *W, int ROUND_KEY_N, uint8_t inverse_sbox[256])
+// {
+//     int W_len = 4*ROUND_KEY_N;
 
+//     uint32_t *D = (uint32_t*) malloc(W_len*sizeof(uint32_t));
+
+//     for (int i = 1; i < W_len - 1; i++)
+//     {
+//         // SubWord(W[i], inverse_sbox);
+//     }
+    
+// }
+
+#endif // INCLUDE_KEY_SCHEDULE

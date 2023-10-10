@@ -4,13 +4,15 @@
 
 #define PRINT_BLOCK 1
 #include "AES_Encryption/AES_Encryption.c"
+#include "AES_Decryption/AES_Decryption.c"
 
 #define BLOCK_SIZE 128
 #define NAME_MAX 64
 
 void example(void);
 
-// padding
+// padding @ end of file #########################################
+
 int main() {
     example();
 exit(0);
@@ -78,8 +80,11 @@ void example(void)
         {0x01, 0xAF, 0x34, 0x66}
     };
     uint32_t key_words[] = {0x00012001, 0x710198AE, 0xDA791714, 0x60153594};
+    int method = 0;
 
-    AES_Encrytion(block, key_words, 0);
+    AES_Encrytion(block, key_words, method);
+    AES_Decrytion(block, key_words, method);
+    
 }
 
 // Original block:
