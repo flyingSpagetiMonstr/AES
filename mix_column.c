@@ -7,7 +7,7 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "../aes_functions.c" // import GET_BYTE
+#include "aes_functions.c" // import GET_BYTE
 
 // int inverse = CONS_MATRIX or CONS_MATRIX_INV
 #define CONS_MATRIX 0

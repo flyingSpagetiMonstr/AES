@@ -38,7 +38,7 @@ void ShiftRows(uint8_t block[4][4], int inverse)
     {
         for (int j = 0; j < 4; j++)
         {
-            tmp[j] = block[i][(j + sign[inverse] * i)%4];
+            tmp[j] = block[i][(j + sign[inverse] * i + 4)%4];
         }
         for (int j = 0; j < 4; j++)
         {

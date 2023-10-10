@@ -3,15 +3,15 @@
 #include <string.h>
 
 #define PRINT_BLOCK 1
-#include "AES_Encryption/AES_Encryption.c"
-#include "AES_Decryption/AES_Decryption.c"
+#include "AES_Encryption.c"
+#include "AES_Decryption.c"
 
 #define BLOCK_SIZE 128
 #define NAME_MAX 64
 
 void example(void);
 
-// padding @ end of file #########################################
+// padding @ end of file (when no padding need)#########################################
 
 int main() {
     example();
@@ -39,11 +39,13 @@ exit(0);
     uint8_t block[4][4] = {0};
     uint32_t key_words[] = {0x00012001, 0x710198AE, 0xDA791714, 0x60153594};
     int method = 0;
-    int cnt = 0;
 
+    int cnt = 0;
+    
     while (flag)
     {
         memset(block, 0, 4*4*sizeof(uint8_t));
+
         for (int j = 0; j < 4; j++)
         {
             for (int i = 0; i < 4; i++)
@@ -62,7 +64,7 @@ exit(0);
             }
         }
     }
-    
+
     fclose(original_file);
     fclose(output_file);
 
@@ -84,7 +86,7 @@ void example(void)
 
     AES_Encrytion(block, key_words, method);
     AES_Decrytion(block, key_words, method);
-    
+
 }
 
 // Original block:

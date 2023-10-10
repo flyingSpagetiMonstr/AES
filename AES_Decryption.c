@@ -2,10 +2,12 @@
 
 #include <stdio.h>
 
-#include "../key_schedule.c"
-#include "../S-Box.c"
-#include "../mix_column.c"
-#include "../aes_functions.c"
+#include "key_schedule.c"
+#include "S-Box.c"
+#include "mix_column.c"
+#include "aes_functions.c"
+
+#define AES_DEC_KEY_EX_TEST 0
 
 void AES_Decrytion(uint8_t block[4][4], uint32_t *key_words, int method)
 {
@@ -28,21 +30,38 @@ void AES_Decrytion(uint8_t block[4][4], uint32_t *key_words, int method)
     // ==================================================
     uint32_t *W = key_schedule(key_words, key_words_len, round_key_n, sbox);
     // W_len = 4*ROUND_KEY_N
-    for (int i = 1; i < 4*round_key_n - 1; i++)
+    for (int i = 4; i < 4*round_key_n - 4; i++)
     {
         W[i] = MixColumns_Word_inv(W[i]);
     }
-    
+
+#if AES_DEC_KEY_EX_TEST
+    puts("Dec_Exkey:");
+    for (int i = 0; i < 4*round_key_n; i++)
+    {
+        if (i%4 == 0 && i!=0)
+        {
+            puts("");
+        }
+        printf("%08X\n", W[i]);
+    }
+    puts("");
+#endif
+
     W += 4*round_key_n - 4; 
 
     AddRoundKey(block, W); W -= 4;
 
+    // ===========================
+
     for (int i = 0; i < round_n - 1; i++)
     {
-        ShiftRows(block, inverse);
         SubBytes(block, inverse_sbox);
+        ShiftRows(block, inverse);
+
+
+        MixColumns(block, inverse); 
         AddRoundKey(block, W); W -= 4;
-        MixColumns(block, inverse); // ########################
     }
 
     // Final Round

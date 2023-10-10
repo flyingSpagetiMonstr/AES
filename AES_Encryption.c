@@ -2,7 +2,7 @@
 
 #define AES_ENCRYTION_MAIN 0
 
-#define AES_KEY_EX_TEST 1
+#define AES_KEY_EX_TEST 0
 #define AES_ADD_R_K_TEST 0
 #define AES_R_TEST 0
 
@@ -10,10 +10,10 @@
 
 #include <stdio.h>
 
-#include "../key_schedule.c"
-#include "../S-Box.c"
-#include "../mix_column.c"
-#include "../aes_functions.c"
+#include "key_schedule.c"
+#include "S-Box.c"
+#include "mix_column.c"
+#include "aes_functions.c"
 
 
 // #define ROUND_N (9, 11 or 13)
