@@ -69,7 +69,9 @@ void AES_Decrytion(uint8_t block[4][4], uint32_t *key_words, int method)
     SubBytes(block, inverse_sbox);
     AddRoundKey(block, W); // K_0
     // W -= 4;
-
+    
+#if PRINT_BLOCK
     puts("After Decryption: ");
     print_b(block);
+#endif
 }

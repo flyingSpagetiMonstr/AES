@@ -1,27 +1,42 @@
+#define PRINT_BLOCK 0
+#define INVERSE 1
+
 #include <stdio.h>
 #include <stdint.h>
 #include <string.h>
 
-#define PRINT_BLOCK 1
 #include "AES_Encryption.c"
 #include "AES_Decryption.c"
 
 #define BLOCK_SIZE 128
 #define NAME_MAX 64
 
+
 void example(void);
 
-// padding @ end of file (when no padding need)#########################################
+// padding @ end of file (also when no padding need)#########################################
 
 int main() {
-    example();
-exit(0);
+    // example();
+// exit(0);
 
-    char *filename = "test.png";
+#if !INVERSE
+    char *filename = "test.txt";
+#else
+    char *filename = "test.png.aes";
+#endif
     char output_file_name[NAME_MAX];
 
     strcpy(output_file_name, filename);
+
+#if !INVERSE
     strcat(output_file_name, ".aes");
+#else
+    output_file_name[strlen(output_file_name)-4] = '\0';
+    strcat(output_file_name, ".recovery.png");
+#endif
+
+
 
     FILE* original_file = fopen(filename, "rb"); // Open the original_file in binary mode
     FILE* output_file = fopen(output_file_name, "wb"); // Open the original_file in binary mode
@@ -54,8 +69,13 @@ exit(0);
             }
         }
         cnt++;
-        printf("Encryption round %d running...\n", cnt);
+        printf("Round %d running...\n", cnt);
+#if !INVERSE
         AES_Encrytion(block, key_words, method);
+#else
+        AES_Decrytion(block, key_words, method);
+#endif
+
         for (int j = 0; j < 4; j++)
         {
             for (int i = 0; i < 4; i++)
