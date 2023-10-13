@@ -29,9 +29,10 @@ int main()
 #endif
 
 
-
 void initialize_aes_sbox(uint8_t sbox[256]) 
 {
+	// This S-Box code is from wiki
+	
 	uint8_t p = 1, q = 1;
 	
 	/* loop invariant: p * q == 1 in the Galois field */
