@@ -1,5 +1,6 @@
 #define PRINT_BLOCK 0
-#define INVERSE 1
+#define INVERSE 0
+#define RUN_EXAMPLE 0
 
 #include <stdio.h>
 #include <stdint.h>
@@ -16,12 +17,27 @@ void example(void);
 
 // padding @ end of file (also when no padding need)#########################################
 
+#include <time.h>
+clock_t start_time, end_time;
+double execution_time;
+
 int main() {
-    // example();
-// exit(0);
+#if RUN_EXAMPLE
+    int execution_round = 1024;
+    start_time = clock();
+
+    for (int i = 0; i < execution_round; i++)
+    {
+        example();
+    }
+    end_time = clock();
+    execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Execution time of single block: %f seconds\n", execution_time / (execution_round*2));
+exit(0);
+#endif
 
 #if !INVERSE
-    char *filename = "test.txt";
+    char *filename = "test.png";
 #else
     char *filename = "test.png.aes";
 #endif
@@ -33,7 +49,7 @@ int main() {
     strcat(output_file_name, ".aes");
 #else
     output_file_name[strlen(output_file_name)-4] = '\0';
-    strcat(output_file_name, ".recovery.png");
+    strcat(output_file_name, ".recovery");
 #endif
 
 
@@ -57,6 +73,9 @@ int main() {
 
     int cnt = 0;
     
+    // start timing
+    puts("Running...");
+    start_time = clock();
     while (flag)
     {
         memset(block, 0, 4*4*sizeof(uint8_t));
@@ -69,7 +88,7 @@ int main() {
             }
         }
         cnt++;
-        printf("Round %d running...\n", cnt);
+        // printf("Round %d running...\n", cnt);
 #if !INVERSE
         AES_Encrytion(block, key_words, method);
 #else
@@ -84,6 +103,10 @@ int main() {
             }
         }
     }
+    // end timing
+    end_time = clock();
+    execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
+    printf("Execution time of file encryption/decryption: %f seconds\n", execution_time);
 
     fclose(original_file);
     fclose(output_file);

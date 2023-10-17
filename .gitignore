@@ -5,4 +5,7 @@ test.*
 *.exe
 *.png
 *.aes
-Others/
+
+src/
+
+submit/
