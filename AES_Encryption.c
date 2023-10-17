@@ -37,6 +37,7 @@ int main()
 }
 #endif
 
+// value of method(1, 2 or 3) represents three selectable lengths of key
 void AES_Encrytion(uint8_t block[4][4], uint32_t *key_words, int method)
 {
     int inverse = 0;

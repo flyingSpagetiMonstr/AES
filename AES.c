@@ -1,6 +1,7 @@
-#define PRINT_BLOCK 0
+#define PRINT_BLOCK 1
 #define INVERSE 0
 #define RUN_EXAMPLE 0
+#define SPEED_TEST 1 // SPEED_TEST BY RUNNING EXAMPLE FOR 1024 TIMES
 
 #include <stdio.h>
 #include <stdint.h>
@@ -22,19 +23,29 @@ clock_t start_time, end_time;
 double execution_time;
 
 int main() {
-#if RUN_EXAMPLE
+#if SPEED_TEST && RUN_EXAMPLE
     int execution_round = 1024;
     start_time = clock();
 
     for (int i = 0; i < execution_round; i++)
     {
+#endif
+
+#if RUN_EXAMPLE
         example();
+#endif
+
+#if SPEED_TEST && RUN_EXAMPLE
     }
     end_time = clock();
     execution_time = (double)(end_time - start_time) / CLOCKS_PER_SEC;
     printf("Execution time of single block: %f seconds\n", execution_time / (execution_round*2));
-exit(0);
 #endif
+#if SPEED_TEST || RUN_EXAMPLE
+    exit(0);
+#endif
+
+
 
 #if !INVERSE
     char *filename = "test.png";
