@@ -1,4 +1,5 @@
-# Contents: AES
+# AES
+This project is an assignment of my Cryptology course at 3rd year.
 - AES by block
   - AES_Encryption.c
   - AES_Decryption.c
