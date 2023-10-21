@@ -1,7 +1,7 @@
 #define PRINT_BLOCK 1
-#define INVERSE 0
-#define RUN_EXAMPLE 0
-#define SPEED_TEST 1 // SPEED_TEST BY RUNNING EXAMPLE FOR 1024 TIMES
+#define INVERSE 1
+#define RUN_EXAMPLE 1
+#define SPEED_TEST 0 // SPEED_TEST BY RUNNING EXAMPLE FOR 1024 TIMES
 
 #include <stdio.h>
 #include <stdint.h>
@@ -121,7 +121,7 @@ int main() {
 
     fclose(original_file);
     fclose(output_file);
-
+    puts("Finished");
     return 0;
 }
 
