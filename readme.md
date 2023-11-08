@@ -23,4 +23,4 @@ This project is an assignment of my Cryptology course at 3rd year.
 
 # Notice
 - For file encryption, it's simply encrypting every blocks in the file (i.e., not following any encryption policy).
-- And the padding function is not complemented yet, currently the last block is padded with 0s defaulty (which might damage the data). 
+- The padding function is not complemented yet, and currently the last block is padded with 0s defaulty (which might damage the data), and when decrypting, the 0s wont get deleted after decryption.
