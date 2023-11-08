@@ -9,3 +9,5 @@ test.*
 src/
 
 submit/
+
+!test.png
