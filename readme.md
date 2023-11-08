@@ -21,4 +21,5 @@
 ==decryption==> [test.png.recovery] 
 
 # Notice
-- For file encryption, the padding function is not accomplished yet. Currently the last block is padded with 0s defaulty (which may damage the data)
+- For file encryption, it's simply encrypting every blocks in the file (i.e., not following any encryption policy).
+- And the padding function is not complemented yet, currently the last block is padded with 0s defaulty (which might damage the data). 
