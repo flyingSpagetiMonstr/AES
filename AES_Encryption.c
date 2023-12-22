@@ -22,6 +22,7 @@
 
 #if AES_ENCRYTION_MAIN
 void AES_Encrytion(uint8_t block[4][4], uint32_t *key_words, int method);
+
 int main()
 {    
     uint8_t block[4][4] = {

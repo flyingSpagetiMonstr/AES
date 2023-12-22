@@ -9,6 +9,7 @@
 
 #define AES_DEC_KEY_EX_TEST 0
 
+// value of method(1, 2 or 3) represents three selectable lengths of key
 void AES_Decrytion(uint8_t block[4][4], uint32_t *key_words, int method)
 {
     int inverse = 1;

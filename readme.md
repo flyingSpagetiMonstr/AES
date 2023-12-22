@@ -13,7 +13,7 @@ This project is an assignment of my Cryptology course at 3rd year.
 
 - Set RUN_EXAMPLE to 0 to run AES by file
   - set INVERSE to 0 to run encryption
-  - set INVERSE to 1 to run encryption
+  - set INVERSE to 1 to run decryption
 
 - Set PRINT_BLOCK to 1 to print block after/before it's encryption/decryption
 
